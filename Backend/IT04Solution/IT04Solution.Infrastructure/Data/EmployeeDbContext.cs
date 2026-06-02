@@ -1,5 +1,7 @@
+using System;
 using IT04Solution.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IT04Solution.Infrastructure.Data
 {
@@ -14,6 +16,11 @@ namespace IT04Solution.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // DateTime converter to ensure all DateTime values are treated as UTC
+            var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
+                v => v.Kind == DateTimeKind.Utc ? v : v.ToUniversalTime(),
+                v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
 
             // Employee entity configuration
             modelBuilder.Entity<Employee>(entity =>
@@ -50,11 +57,17 @@ namespace IT04Solution.Infrastructure.Data
                 entity.Property(e => e.ProfileImage)
                     .HasColumnType("bytea");
 
+                entity.Property(e => e.BirthDay)
+                    .HasColumnType("timestamp with time zone")
+                    .HasConversion(dateTimeConverter);
+
                 entity.Property(e => e.CreatedAt)
-                    .HasDefaultValueSql("now()");
+                    .HasColumnType("timestamp with time zone")
+                    .HasConversion(dateTimeConverter);
 
                 entity.Property(e => e.UpdatedAt)
-                    .IsRequired(false);
+                    .HasColumnType("timestamp with time zone")
+                    .HasConversion(dateTimeConverter);
 
                 // Indexes
                 entity.HasIndex(e => e.Email).IsUnique();

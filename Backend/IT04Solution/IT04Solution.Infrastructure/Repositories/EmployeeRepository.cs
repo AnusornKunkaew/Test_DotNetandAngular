@@ -21,6 +21,7 @@ namespace IT04Solution.Infrastructure.Repositories
 
         public async Task<EmployeeResponse> CreateAsync(CreateEmployeeRequest request)
         {
+            var now = DateTime.UtcNow;
             var employee = new Employee
             {
                 FirstName = request.FirstName,
@@ -30,7 +31,8 @@ namespace IT04Solution.Infrastructure.Repositories
                 BirthDay = request.BirthDay,
                 Occupation = request.Occupation,
                 Sex = request.Sex,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = now,
+                UpdatedAt = now
             };
 
             if (!string.IsNullOrEmpty(request.ProfileImageBase64))

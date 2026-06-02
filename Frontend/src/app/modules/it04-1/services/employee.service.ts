@@ -7,7 +7,7 @@ import { IEmployee, ICreateEmployeeRequest, IApiResponse } from '../models/emplo
   providedIn: 'root'
 })
 export class EmployeeService {
-  private readonly apiUrl = 'http://localhost:5000/api/employee';
+  private readonly apiUrl = 'http://localhost:5001/api/employee';
 
   constructor(private http: HttpClient) { }
 

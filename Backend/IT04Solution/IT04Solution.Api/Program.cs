@@ -14,7 +14,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular", policy =>
     {
-        policy.WithOrigins("http://localhost:4200", "http://localhost:4201")
+        policy.WithOrigins("http://localhost:4200", "http://localhost:4201", "http://localhost:5001")
             .AllowAnyMethod()
             .AllowAnyHeader();
     });
@@ -22,7 +22,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddDbContext<EmployeeDbContext>(options =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("Host=localhost;Port=5432;Database=IT04_Employee;Username=postgres;Password=admin");
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseNpgsql(connectionString);
 });
 
@@ -50,9 +50,9 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
 app.UseCors("AllowAngular");
 app.UseAuthorization();
 app.MapControllers();
 
+app.Urls.Add("http://localhost:5001");
 app.Run();
