@@ -14,10 +14,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Moq" Version="4.20.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="../IT04Solution.Application/IT04Solution.Application.csproj" />
+    <ProjectReference Include="../IT04Solution.Infrastructure/IT04Solution.Infrastructure.csproj" />
+    <ProjectReference Include="../IT04Solution.Api/IT04Solution.Api.csproj" />
   </ItemGroup>
 
 </Project>
