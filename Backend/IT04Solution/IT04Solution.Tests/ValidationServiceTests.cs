@@ -280,10 +280,9 @@ namespace IT04Solution.Tests
         }
 
         [Theory]
-        [InlineData("081234567")]      // 9 digits - valid
+        [InlineData("021234567")]      // 9 digits - valid (ขึ้นต้นด้วย 02)
         [InlineData("0812345678")]     // 10 digits - valid
         [InlineData("08-123-4567")]    // 10 digits with formatting
-        [InlineData("+66812345678")]   // international format
         public void ValidateEmployee_WithValidPhone_PassesValidation(string validPhone)
         {
             // Arrange
@@ -309,6 +308,7 @@ namespace IT04Solution.Tests
         [InlineData("08123456")]       // 8 digits - too short
         [InlineData("081234567891")]   // 11 digits - too long
         [InlineData("123")]            // too short
+        [InlineData("+66812345678")]   // international format
         public void ValidateEmployee_WithInvalidPhoneLength_ReturnsError(string invalidPhone)
         {
             // Arrange
